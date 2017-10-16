@@ -1,0 +1,8 @@
+# Java class files
+*.class
+
+# Generated files
+VhallJavaSDKDemo/bin/
+gen/
+out/
+
