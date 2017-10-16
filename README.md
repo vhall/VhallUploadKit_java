@@ -16,6 +16,7 @@
 ![image](https://github.com/vhall/VhallUploadKit_java/blob/master/VhallJavaSDKDemo/screenshots/screentwo.png)
 
 4、停止上传:util.stopUpload(fileKey) 暂停此次上传操作
+
 ![image](https://github.com/vhall/VhallUploadKit_java/blob/master/VhallJavaSDKDemo/screenshots/screenthree.png)
 
 5、取消上传：util.abortUpload(fileKey) 废弃此次上传操作
