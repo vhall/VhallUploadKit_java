@@ -15,10 +15,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileSystemView;
 
-import org.apache.http.client.methods.AbortableHttpRequest;
 import org.apache.http.util.TextUtils;
-import org.json.JSONObject;
-
 import com.aliyun.oss.event.ProgressEvent;
 import com.aliyun.oss.event.ProgressEventType;
 import com.aliyun.oss.event.ProgressListener;
@@ -29,8 +26,8 @@ import com.vhall.toolkit.VhallUploadKit;
 public class SampleWithWindow extends JFrame {
 	private static final long serialVersionUID = 560684569647135515L;
 	// 编辑部分
-	public static final String APP_KEY = "a9b74cb0eb39e378ae5ebcd2ca24d4cb";
-	public static final String SECRET_KEY = "00199f4479c30af33b98ac473b17f3a1";
+	public static final String APP_KEY = "";
+	public static final String SECRET_KEY = "";
 	public static final String videoName = "测试 & 回放 名称";
 	public static final String subjectName = "测试 * & % ￥活动 名称";
 	public static final String callbackurl = "http://t.e.vhall.com/api/callback";
