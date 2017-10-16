@@ -217,7 +217,6 @@ public class SampleWithWindow extends JFrame {
 			case TRANSFER_COMPLETED_EVENT:
 				this.succeed = true;
 				tipsLabel.setText("上传成功!");
-				//清空当前fileKey
 				fileKey = "";
 				break;
 
@@ -232,6 +231,11 @@ public class SampleWithWindow extends JFrame {
 
 		public boolean isSucceed() {
 			return succeed;
+		}
+
+		@Override
+		public void webinarCreate(String fileKey, String webinarId, String recordId) {
+//			tipsLabel.setText("文件ID："+fileKey+" 生成回放成功，活动ID："+webinarId+" 片段ID："+recordId);
 		}
 	}
 

@@ -9,6 +9,6 @@
 	<classpathentry kind="lib" path="lib/httpcore-4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/json-20170516.jar"/>
-	<classpathentry kind="lib" path="lib/vhall-uploadkit-2.0-release.jar"/>
+	<classpathentry kind="lib" path="lib/vhalluploadkit-2.0-release.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
