@@ -13,6 +13,7 @@
 ![image](https://github.com/vhall/VhallUploadKit_java/blob/master/VhallJavaSDKDemo/screenshots/screenone.png)
 
 3、上传文件并生成回放：util.uploadFile(file, videoName,subjectName,callback, new PutObjectProgressListener());
+//修改 添加userId（子账号）字段，支持生成子账号下的活动，传空时默认生成主账号下活动
 ![image](https://github.com/vhall/VhallUploadKit_java/blob/master/VhallJavaSDKDemo/screenshots/screentwo.png)
 
 4、停止上传:util.stopUpload(fileKey) 暂停此次上传操作
