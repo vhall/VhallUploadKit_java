@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileSystemView;
 
 import org.apache.http.util.TextUtils;
+
 import com.aliyun.oss.event.ProgressEvent;
 import com.aliyun.oss.event.ProgressEventType;
 import com.aliyun.oss.event.ProgressListener;
@@ -26,11 +27,12 @@ import com.vhall.toolkit.VhallUploadKit;
 public class SampleWithWindow extends JFrame {
 	private static final long serialVersionUID = 560684569647135515L;
 	// 编辑部分
-	public static final String APP_KEY = "";
-	public static final String SECRET_KEY = "";
-	public static final String videoName = "测试 & 回放 名称";
-	public static final String subjectName = "测试 * & % ￥活动 名称";
+	public static final String APP_KEY = "";// 微吼APPKEY
+	public static final String SECRET_KEY = "";// 微吼SECRETKEY
+	public static final String videoName = "测试 & 回放 名称";// 生成录播片段名称
+	public static final String subjectName = "测试 * & % ￥活动 名称xxxxx";// 活动名称
 	public static final String callbackurl = "http://t.e.vhall.com/api/callback";
+	public static final String userId = "";// 子账号ID
 
 	// demo
 	static Callback callback;
@@ -136,7 +138,7 @@ public class SampleWithWindow extends JFrame {
 			tipsLabel.setText("请先选择文件...");
 			return;
 		}
-		String key = util.uploadAndBuildWebinar(file, videoName, subjectName, callback,
+		String key = util.uploadAndBuildWebinar(userId, file, videoName, subjectName, callback,
 				new PutObjectProgressListener(file.length()));
 		if (!TextUtils.isEmpty(key))
 			fileKey = key;
@@ -164,11 +166,11 @@ public class SampleWithWindow extends JFrame {
 			tipsLabel.setText("请先上传...");
 			return;
 		}
-		if (util.abortUpload(fileKey)){
+		if (util.abortUpload(fileKey)) {
 			tipsLabel.setText("上传已取消...");
 			fileKey = "";
 		}
-			
+
 	}
 
 	/**
@@ -232,7 +234,8 @@ public class SampleWithWindow extends JFrame {
 
 		@Override
 		public void webinarCreate(String fileKey, String webinarId, String recordId) {
-//			tipsLabel.setText("文件ID："+fileKey+" 生成回放成功，活动ID："+webinarId+" 片段ID："+recordId);
+			// tipsLabel.setText("文件ID："+fileKey+" 生成回放成功，活动ID："+webinarId+"
+			// 片段ID："+recordId);
 		}
 	}
 
