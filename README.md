@@ -9,7 +9,10 @@
 
 1、构建VhallUploadKit：util = VhallUploadKit.getInstance();
 
-2、使用微吼APP_KEY,SECRET_KEY 初始化VhallUploadKit：util.initData(APP_KEY, SECRET_KEY);
+2、使用微吼APP_KEY,SECRET_KEY 初始化VhallUploadKit：  
+
+//type
+util.initData(APP_KEY, SECRET_KEY,TYPE);
 ![image](https://github.com/vhall/VhallUploadKit_java/blob/master/VhallJavaSDKDemo/screenshots/screenone.png)
 
 3、上传文件并生成回放：util.uploadFile(file, videoName,subjectName,callback, new PutObjectProgressListener());
