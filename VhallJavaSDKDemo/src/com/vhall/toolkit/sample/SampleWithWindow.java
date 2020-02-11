@@ -15,6 +15,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileSystemView;
 
+import com.vhall.toolkit.VhallUploadKit;
 import org.apache.http.util.TextUtils;
 
 import com.aliyun.oss.event.ProgressEvent;
@@ -22,16 +23,17 @@ import com.aliyun.oss.event.ProgressEventType;
 import com.aliyun.oss.event.ProgressListener;
 import com.aliyun.oss.model.Callback;
 import com.aliyun.oss.model.Callback.CalbackBodyType;
-import com.vhall.toolkit.VhallUploadKit;
 
 public class SampleWithWindow extends JFrame {
 	private static final long serialVersionUID = 560684569647135515L;
 	// 编辑部分
+	//TODO APPID
 	public static final String APP_KEY = "";// 微吼APPKEY
 	public static final String SECRET_KEY = "";// 微吼SECRETKEY
-	public static final String videoName = "测试 & 回放 名称";// 生成录播片段名称
-	public static final String subjectName = "测试 * & % ￥活动 名称xxxxx";// 活动名称
-	public static final String callbackurl = "http://t.e.vhall.com/api/callback";
+	public static final String videoName = "回放名称";// 生成录播片段名称
+	public static final String subjectName = "活动名称";// 活动名称
+	public static final String callbackurl = "http://e.vhall.com/api/callback";
+
 	public static final String userId = "";// 子账号ID
 
 	// demo
@@ -63,18 +65,11 @@ public class SampleWithWindow extends JFrame {
 		window.setContentPane(initUI());
 		window.setVisible(true);
 
-		util.initData(APP_KEY, SECRET_KEY);
-		if (util.isEnable()) {
-			tipsLabel.setText("初始化成功！");
-		} else {
-			tipsLabel.setText("初始化失败！");
-		}
-
 	}
 
 	private static JPanel initUI() {
 		final JPanel contentPanel = new JPanel();
-		contentPanel.setLayout(new GridLayout(10, 1));
+		contentPanel.setLayout(new GridLayout(12, 1));
 		fileLabel = new JLabel();
 		fileLabel.setText("请选择文件！");
 		fileLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -83,6 +78,33 @@ public class SampleWithWindow extends JFrame {
 		bar.setMinimum(0);
 		bar.setValue(0);
 		bar.setStringPainted(true);
+
+		JButton initFlashButton = new JButton("初始化Flash上传");
+		initFlashButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				util.initData(APP_KEY, SECRET_KEY);
+				if (util.isEnable()) {
+					tipsLabel.setText("初始化成功！");
+				} else {
+					tipsLabel.setText("初始化失败！");
+				}
+			}
+		});
+
+		JButton initH5Button = new JButton("初始化H5上传");
+
+		initH5Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				util.initData(APP_KEY, SECRET_KEY, 2);
+				if (util.isEnable()) {
+					tipsLabel.setText("初始化成功！");
+				} else {
+					tipsLabel.setText("初始化失败！");
+				}
+			}
+		});
 
 		JButton selectBtn = new JButton("选择文件");
 		selectBtn.addActionListener(new ActionListener() {
@@ -120,6 +142,8 @@ public class SampleWithWindow extends JFrame {
 		tipsLabel.setText("初始化，请稍等...");
 		tipsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+		contentPanel.add(initFlashButton);
+		contentPanel.add(initH5Button);
 		contentPanel.add(fileLabel);
 		contentPanel.add(new JLabel());
 		contentPanel.add(bar);
@@ -138,10 +162,13 @@ public class SampleWithWindow extends JFrame {
 			tipsLabel.setText("请先选择文件...");
 			return;
 		}
-		String key = util.uploadAndBuildWebinar(userId, file, videoName, subjectName, callback,
+		String key = util.uploadAndBuildWebinar(userId, file, videoName, subjectName, null,
 				new PutObjectProgressListener(file.length()));
-		if (!TextUtils.isEmpty(key))
+
+		if (!TextUtils.isEmpty(key)) {
 			fileKey = key;
+		}
+		tipsLabel.setText(fileKey);
 	}
 
 	private static void stopUpload() {
@@ -193,38 +220,38 @@ public class SampleWithWindow extends JFrame {
 			long bytes = progressEvent.getBytes();
 			ProgressEventType eventType = progressEvent.getEventType();
 			switch (eventType) {
-			case TRANSFER_STARTED_EVENT:
-				tipsLabel.setText("开始上传...");
-				break;
-			case REQUEST_CONTENT_LENGTH_EVENT:
-				this.totalBytes = bytes;
-				this.bytesWritten = fileLength - totalBytes;
-				break;
-			case REQUEST_BYTE_TRANSFER_EVENT:
-				this.bytesWritten += bytes;
-				if (this.totalBytes != -1) {
-					int percent = (int) (this.bytesWritten * 100.0 / this.fileLength);
-					bar.setValue(percent);
-					System.out.println(bytes + " bytes have been written at this time, upload progress: " + percent
-							+ "%(" + this.bytesWritten + "/" + this.fileLength + ")");
-				} else {
-					System.out.println(bytes + " bytes have been written at this time, upload ratio: unknown" + "("
-							+ this.bytesWritten + "/...)");
-				}
-				break;
+				case TRANSFER_STARTED_EVENT:
+					tipsLabel.setText("开始上传...");
+					break;
+				case REQUEST_CONTENT_LENGTH_EVENT:
+					this.totalBytes = bytes;
+					this.bytesWritten = fileLength - totalBytes;
+					break;
+				case REQUEST_BYTE_TRANSFER_EVENT:
+					this.bytesWritten += bytes;
+					if (this.totalBytes != -1) {
+						int percent = (int) (this.bytesWritten * 100.0 / this.fileLength);
+						bar.setValue(percent);
+						System.out.println(bytes + " bytes have been written at this time, upload progress: " + percent
+								+ "%(" + this.bytesWritten + "/" + this.fileLength + ")");
+					} else {
+						System.out.println(bytes + " bytes have been written at this time, upload ratio: unknown" + "("
+								+ this.bytesWritten + "/...)");
+					}
+					break;
 
-			case TRANSFER_COMPLETED_EVENT:
-				this.succeed = true;
-				tipsLabel.setText("上传成功!");
-				fileKey = "";
-				break;
+				case TRANSFER_COMPLETED_EVENT:
+					this.succeed = true;
+					tipsLabel.setText("上传成功!" + "fileKey=" + fileKey);
+					fileKey = "";
+					break;
 
-			case TRANSFER_FAILED_EVENT:
-				tipsLabel.setText("上传失败!");
-				break;
+				case TRANSFER_FAILED_EVENT:
+					tipsLabel.setText("上传失败!");
+					break;
 
-			default:
-				break;
+				default:
+					break;
 			}
 		}
 
@@ -234,8 +261,8 @@ public class SampleWithWindow extends JFrame {
 
 		@Override
 		public void webinarCreate(String fileKey, String webinarId, String recordId) {
-			// tipsLabel.setText("文件ID："+fileKey+" 生成回放成功，活动ID："+webinarId+"
-			// 片段ID："+recordId);
+			tipsLabel.setText("生成回放成功，活动ID：" + webinarId +
+					"片段ID：" + recordId);
 		}
 	}
 
