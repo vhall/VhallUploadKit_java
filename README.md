@@ -39,4 +39,4 @@ util.uploadFile(userId,file, videoName,subjectName,callback, new PutObjectProgre
 
 1，增加onCreateWebinarError(String fileKey, String extra) 上传完成生成回放错误回调
 
-2，增加onUploadFinal(String fileKey, String extra) 上传结束  不管成功/失败完，成此次上传均回调此函数
+2，增加onUploadFinal(String fileKey, String extra) 上传结束  不管成功/失败,完成此次上传均回调此函数
