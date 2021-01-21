@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="vhall-upload-release">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/vhall-upload-release.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/vhall-upload-release.jar!/src" />
+    </SOURCES>
+  </library>
+</component>

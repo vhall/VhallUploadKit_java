@@ -264,6 +264,16 @@ public class SampleWithWindow extends JFrame {
 			tipsLabel.setText("生成回放成功，活动ID：" + webinarId +
 					"片段ID：" + recordId);
 		}
+
+		@Override
+		public void onCreateWebinarError(String s, String s1) {
+			//上传创建回放时 生成错误
+		}
+
+		@Override
+		public void onUploadFinal(String s, String s1) {
+			//上传结束
+		}
 	}
 
 	private static void selectFile(Component parent) {
